@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(oneminutechanges-cpp LANGUAGES CXX)
+project(oneminutechanges LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -28,7 +28,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Sql PrintSupport REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Sql PrintSupport REQUIRED)
 
 if(ANDROID)
-  add_library(oneminutechanges-cpp SHARED
+  add_library(omc SHARED
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
@@ -39,7 +39,7 @@ if(ANDROID)
     3rdparty/qcustomplot/qcustomplot.cpp
   )
 else()
-  add_executable(oneminutechanges-cpp
+  add_executable(omc
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
@@ -51,4 +51,4 @@ else()
   )
 endif()
 
-target_link_libraries(oneminutechanges-cpp PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql Qt${QT_VERSION_MAJOR}::PrintSupport)
+target_link_libraries(omc PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql Qt${QT_VERSION_MAJOR}::PrintSupport)
