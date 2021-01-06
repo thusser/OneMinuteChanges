@@ -240,6 +240,7 @@ void MainWindow::updatePlot()
         if (y[i] > maxY)
             maxY = y[i];
     }
+    auto marginX = -minX * 0.1, marginY = maxY * 0.1;
 
     // create graph and assign data to it:
     ui->plotHistory->addGraph();
@@ -252,8 +253,8 @@ void MainWindow::updatePlot()
     ui->plotHistory->yAxis->setLabel("Count");
 
     // set axes ranges, so we see all data:
-    ui->plotHistory->xAxis->setRange(minX * 1.1, 0);
-    ui->plotHistory->yAxis->setRange(0, maxY * 1.1);
+    ui->plotHistory->xAxis->setRange(minX - marginX, marginX);
+    ui->plotHistory->yAxis->setRange(-marginY, maxY + marginY);
     ui->plotHistory->replot();
 }
 
