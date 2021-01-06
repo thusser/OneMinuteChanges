@@ -32,6 +32,19 @@ int main(int argc, char *argv[])
         }
     }
 
+#ifndef WIN32
+    // if this is not Windows, ConfigLocation probably returned ~/.config
+    // so add sub-directory
+    QString sub("OneMinuteChanges");
+    if (!dir.exists(sub)) {
+        if (!dir.mkpath(sub)) {
+            QMessageBox::critical(NULL, "Error", "Could not create config directory.");
+            return 1;
+        }
+    }
+    dir.cd(sub);
+#endif
+
     // get filename for db
     QString filename = dir.absoluteFilePath("database.sqlite");
 
