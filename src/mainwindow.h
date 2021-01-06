@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QSqlDatabase>
 #include <QTimer>
-#include <sqlite3.h>
-#include "models.h"
+#include <QDateTime>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,7 +30,6 @@ private:
     void updateChordTable();
     void updateChordList();
     void updateHistory();
-    ChordPair selectedPair();
     void startTimer();
     void stopTimer(bool ask = false);
     void updatePlot();

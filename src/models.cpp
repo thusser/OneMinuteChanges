@@ -1,8 +1,9 @@
-#include "models.h"
-
 #include <QSqlQuery>
 #include <QVariant>
 #include <QDebug>
+
+#include "models.h"
+
 
 Chord::Chord(int id, const QString &name) : id(id), name(name)
 {

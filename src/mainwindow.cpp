@@ -4,9 +4,22 @@
 #include <QMessageBox>
 #include <algorithm>
 #include <cmath>
+
+#include "models.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "models.h"
+
+
+ChordPair selectedPair(QTableWidget *table)
+{
+    // get item
+    auto item = table->currentItem();
+    if (!item)
+        return ChordPair::empty();
+
+    // get pair
+    return ChordPair::getById(item->data(Qt::UserRole).toInt());
+}
 
 MainWindow::MainWindow(QSqlDatabase *db, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), db(db)
@@ -42,7 +55,7 @@ void MainWindow::updateChordTable()
     }
 
     // get current
-    auto current = selectedPair();
+    auto current = selectedPair(ui->tableChords);
     auto currentSelection = QTableWidgetSelectionRange(0, 0, 0, 0);
 
     // set row/col counts
@@ -138,7 +151,7 @@ void MainWindow::updateHistory()
     ui->tableHistory->setRowCount(0);
 
     // get counts
-    auto pair = selectedPair();
+    auto pair = selectedPair(ui->tableChords);
     auto counts = pair.counts();
 
     // got something?
@@ -167,21 +180,10 @@ void MainWindow::updateHistory()
     updatePlot();
 }
 
-ChordPair MainWindow::selectedPair()
-{
-    // get item
-    auto item = ui->tableChords->currentItem();
-    if (!item)
-        return ChordPair::empty();
-
-    // get pair
-    return ChordPair::getById(item->data(Qt::UserRole).toInt());
-}
-
 void MainWindow::startTimer()
 {
     // get pair
-    auto pair = selectedPair();
+    auto pair = selectedPair(ui->tableChords);
     if (pair.isEmpty())
         return;
 
@@ -219,7 +221,7 @@ void MainWindow::stopTimer(bool ask)
 void MainWindow::updatePlot()
 {
     // get selected pair and counts
-    auto pair = selectedPair();
+    auto pair = selectedPair(ui->tableChords);
     if (pair.isEmpty())
         return;
     auto counts = pair.counts();
@@ -297,7 +299,7 @@ void MainWindow::on_buttonRemoveChord_clicked()
 void MainWindow::chordPair_selected()
 {
     // get selected pair
-    auto pair = selectedPair();
+    auto pair = selectedPair(ui->tableChords);
 
     // something?
     if (pair.id == -1) {
@@ -327,7 +329,7 @@ void MainWindow::on_buttonAddHistory_clicked()
     int count = QInputDialog::getInt(this, "New count", "Enter number of changes:", 0, 0, 1000, 1, &ok);
     if (ok) {
         // get pair
-        auto pair = selectedPair();
+        auto pair = selectedPair(ui->tableChords);
 
         // add history
         ChordCount::create(pair.id, count);

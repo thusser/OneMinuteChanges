@@ -6,8 +6,6 @@
 #include <QString>
 
 
-class ChordCount;
-
 class Chord
 {
 public:
@@ -24,23 +22,6 @@ public:
     QString name;
 };
 
-class ChordPair
-{
-public:
-    ChordPair(int id, int chord1_id, int chord2_id);
-
-    inline bool isEmpty() { return id == -1; };
-    const QList<ChordCount> counts();
-    inline Chord chord1() { return Chord::getById(chord1_id); }
-    inline Chord chord2() { return Chord::getById(chord2_id); }
-
-    static const ChordPair empty();
-    static const ChordPair getById(int id);
-    static const ChordPair getOrCreate(int chord1_id, int chord2_id);
-
-    int id, chord1_id, chord2_id;
-};
-
 class ChordCount
 {
 public:
@@ -53,5 +34,23 @@ public:
     int id, chords_id, count;
     QDateTime time;
 };
+
+class ChordPair
+{
+public:
+    ChordPair(int id, int chord1_id, int chord2_id);
+
+    inline bool isEmpty() { return id == -1; }
+    const QList<ChordCount> counts();
+    inline Chord chord1() { return Chord::getById(chord1_id); }
+    inline Chord chord2() { return Chord::getById(chord2_id); }
+
+    static const ChordPair empty();
+    static const ChordPair getById(int id);
+    static const ChordPair getOrCreate(int chord1_id, int chord2_id);
+
+    int id, chord1_id, chord2_id;
+};
+
 
 #endif // MODELS_H
