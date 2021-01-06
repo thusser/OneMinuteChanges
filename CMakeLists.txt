@@ -35,6 +35,7 @@ if(ANDROID)
     src/mainwindow.ui
     src/models.h
     src/models.cpp
+    src/version.h
     3rdparty/qcustomplot/qcustomplot.h
     3rdparty/qcustomplot/qcustomplot.cpp
   )
@@ -46,6 +47,7 @@ else()
     src/mainwindow.ui
     src/models.h
     src/models.cpp
+    src/version.h
     3rdparty/qcustomplot/qcustomplot.h
     3rdparty/qcustomplot/qcustomplot.cpp
   )
