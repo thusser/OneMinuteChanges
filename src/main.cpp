@@ -3,37 +3,33 @@
 #include <QApplication>
 #include <QDir>
 #include <QSqlDatabase>
-#include <sqlite3.h>
-#include <unistd.h>
 #include <sys/types.h>
-#include <pwd.h>
 #include <string>
 
 #include <QDebug>
 #include <QMessageBox>
 #include <QSqlQuery>
+#include <QStandardPaths>
 
 
 int main(int argc, char *argv[])
 {
+    // set app name
+    QApplication::setApplicationName("OneMinuteChanges");
+    QApplication::setOrganizationName("");
+
     // create app
     QApplication app(argc, argv);
 
-    // get home directory
-    QDir dir = QDir::home();
+    // get config directory
+    QDir dir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
 
     // get or create config directory
-    if (!dir.exists(".oneminutechanges")) {
-        if (!dir.mkdir(".oneminutechanges")) {
+    if (!dir.exists()) {
+        if (!dir.mkpath(".")) {
             QMessageBox::critical(NULL, "Error", "Could not create config directory.");
             return 1;
         }
-    }
-
-    // move into directory
-    if (!dir.cd(".oneminutechanges")) {
-        QMessageBox::critical(NULL, "Error", "Could not enter config directory.");
-        return 1;
     }
 
     // get filename for db
