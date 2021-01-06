@@ -240,7 +240,7 @@ void MainWindow::updatePlot()
         if (y[i] > maxY)
             maxY = y[i];
     }
-    auto marginX = -minX * 0.1, marginY = maxY * 0.1;
+    auto marginX = std::max(0.1, -minX * 0.1), marginY = std::max(0.1, maxY * 0.1);
 
     // create graph and assign data to it:
     ui->plotHistory->addGraph();
